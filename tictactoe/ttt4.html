@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tic Tac Toe: Part 4</title>
+    <style type="text/css">
+        body {
+            margin: 20px;
+        }
+        h1 {
+            color: #000000;
+            font-size: 24px;
+        }
+        #turn-msg {
+            border: 2px solid #000000;
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 300px;
+        }
+        #win-msg {
+            border: 2px solid #000000;
+            padding: 10px;
+            margin-top: 15px;
+            width: 300px;
+        }
+        .board {
+            width: 330px;
+            overflow: hidden;
+        }
+        .square {
+            box-sizing: border-box;
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            border: 1px solid #000000;
+            float: left;
+            text-align: center;
+            line-height: 98px;
+            font-size: 60px;
+        }
+        .square:hover {
+            background-color: #ebc3df;
+        }
+        #startbtn {
+            margin-top: 15px;
+            padding: 8px 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic Tac Toe</h1>
+    <div id="turn-msg">X's turn</div>
+    <div class="board">
+        <script>
+            const NUM_SQUARES = 9;
+            for (i = 0; i < NUM_SQUARES; i++) {
+                id = "sq" + i;
+                document.write("<div class='square' id='" + id + "'></div>");
+            }
+        </script>
+    </div>
+    <div id="win-msg">&nbsp;</div>
+    <button id="startbtn" type="button">Start Game</button>
+    <script>
+        var currentTurn = "X";
+        var gameOver = false;
+
+        function checkGame() {
+            var m0 = document.getElementById("sq0").innerHTML;
+            var m1 = document.getElementById("sq1").innerHTML;
+            var m2 = document.getElementById("sq2").innerHTML;
+            var m3 = document.getElementById("sq3").innerHTML;
+            var m4 = document.getElementById("sq4").innerHTML;
+            var m5 = document.getElementById("sq5").innerHTML;
+            var m6 = document.getElementById("sq6").innerHTML;
+            var m7 = document.getElementById("sq7").innerHTML;
+            var m8 = document.getElementById("sq8").innerHTML;
+
+            //check rows
+            if (m0 === "X" && m1 === "X" && m2 === "X") { document.getElementById("win-msg").innerHTML = "X wins!"; gameOver = true; return; }
+            if (m0 === "O" && m1 === "O" && m2 === "O") { document.getElementById("win-msg").innerHTML = "O wins!"; gameOver = true; return; }
+            if (m3 === "X" && m4 === "X" && m5 === "X") { document.getElementById("win-msg").innerHTML = "X wins!"; gameOver = true; return; }
+            if (m3 === "O" && m4 === "O" && m5 === "O") { document.getElementById("win-msg").innerHTML = "O wins!"; gameOver = true; return; }
+            if (m6 === "X" && m7 === "X" && m8 === "X") { document.getElementById("win-msg").innerHTML = "X wins!"; gameOver = true; return; }
+            if (m6 === "O" && m7 === "O" && m8 === "O") { document.getElementById("win-msg").innerHTML = "O wins!"; gameOver = true; return; }
+            
+            //check columns
+            if (m0 === "X" && m3 === "X" && m6 === "X") { document.getElementById("win-msg").innerHTML = "X wins!"; gameOver = true; return; }
+            if (m0 === "O" && m3 === "O" && m6 === "O") { document.getElementById("win-msg").innerHTML = "O wins!"; gameOver = true; return; }
+            if (m1 === "X" && m4 === "X" && m7 === "X") { document.getElementById("win-msg").innerHTML = "X wins!"; gameOver = true; return; }
+            if (m1 === "O" && m4 === "O" && m7 === "O") { document.getElementById("win-msg").innerHTML = "O wins!"; gameOver = true; return; }
+            if (m2 === "X" && m5 === "X" && m8 === "X") { document.getElementById("win-msg").innerHTML = "X wins!"; gameOver = true; return; }
+            if (m2 === "O" && m5 === "O" && m8 === "O") { document.getElementById("win-msg").innerHTML = "O wins!"; gameOver = true; return; }
+            
+            //check diagonals
+            if (m0 === "X" && m4 === "X" && m8 === "X") { document.getElementById("win-msg").innerHTML = "X wins!"; gameOver = true; return; }
+            if (m0 === "O" && m4 === "O" && m8 === "O") { document.getElementById("win-msg").innerHTML = "O wins!"; gameOver = true; return; }
+            if (m2 === "X" && m4 === "X" && m6 === "X") { document.getElementById("win-msg").innerHTML = "X wins!"; gameOver = true; return; }
+            if (m2 === "O" && m4 === "O" && m6 === "O") { document.getElementById("win-msg").innerHTML = "O wins!"; gameOver = true; return; }
+
+            // tie = all squares filled
+            if (m0 !== "" && m1 !== "" && m2 !== "" && m3 !== "" && m4 !== "" && m5 !== "" && m6 !== "" && m7 !== "" && m8 !== "") {
+                document.getElementById("win-msg").innerHTML = "Tie!";
+                gameOver = true;
+            }
+        }
+
+        function handleClick(event) {
+            var sq = event.target;
+            if (gameOver) return;
+
+            //already has X or O
+            if (sq.innerHTML !== "") return;  
+            sq.innerHTML = currentTurn;
+            if (currentTurn === "X") {
+                currentTurn = "O";
+                document.getElementById("turn-msg").innerHTML = "O's turn";
+            } else {
+                currentTurn = "X";
+                document.getElementById("turn-msg").innerHTML = "X's turn";
+            }
+            checkGame();
+        }
+
+        function startGame() {
+            var i;
+            for (i = 0; i < 9; i++) {
+                document.getElementById("sq" + i).innerHTML = "";
+            }
+            document.getElementById("win-msg").innerHTML = "&nbsp;";
+            document.getElementById("turn-msg").innerHTML = "X's turn";
+            currentTurn = "X";
+            gameOver = false;
+        }
+
+        for (var i = 0; i < 9; i++) {
+            document.getElementById("sq" + i).onclick = handleClick;
+        }
+        document.getElementById("startbtn").onclick = startGame;
+        gameOver = false;
+    </script>
+</body>
+</html>
