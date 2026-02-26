@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tic Tac Toe: Part 3</title>
+    <style type="text/css">
+        body {
+            margin: 20px;
+        }
+        h1 {
+            color: #1a237e;
+            font-size: 24px;
+        }
+        #turn-msg {
+            border: 2px solid #000000;
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 300px;
+        }
+        #win-msg {
+            border: 2px solid #000000;
+            padding: 10px;
+            margin-top: 15px;
+            width: 300px;
+        }
+        .board {
+            width: 330px;
+            overflow: hidden;
+        }
+        .square {
+            box-sizing: border-box;
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            border: 1px solid #000000;
+            float: left;
+            text-align: center;
+            line-height: 98px;
+            font-size: 60px;
+        }
+        .square:hover {
+            background-color: #dad69b;
+        }
+        #startbtn {
+            margin-top: 15px;
+            padding: 8px 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic Tac Toe</h1>
+    <div id="turn-msg">X's turn</div>
+    <div class="board">
+        <script>
+            const NUM_SQUARES = 9;
+            for (i = 0; i < NUM_SQUARES; i++) {
+                id = "sq" + i;
+                document.write("<div class='square' id='" + id + "'></div>");
+            }
+        </script>
+    </div>
+    <div id="win-msg">&nbsp;</div>
+    <button id="startbtn" type="button">Start Game</button>
+    <script>
+        var currentTurn;
+        var gameOver;
+
+        function handleClick(event) {
+            var el = event.target;
+            var id = el.id;
+            if (id.indexOf("sq") !== 0) return;
+            var num = parseInt(id.substring(2), 10);
+            if (gameOver) return;
+            if (el.innerHTML !== "") return;
+            el.innerHTML = currentTurn;
+            alert("Square number: " + num);
+            if (currentTurn === "X") {
+                currentTurn = "O";
+                document.getElementById("turn-msg").innerHTML = "O's turn";
+            } else {
+                currentTurn = "X";
+                document.getElementById("turn-msg").innerHTML = "X's turn";
+            }
+        }
+
+        function startGame() {
+            var j;
+            for (j = 0; j < NUM_SQUARES; j++) {
+                document.getElementById("sq" + j).innerHTML = "";
+            }
+            document.getElementById("win-msg").innerHTML = "&nbsp;";
+            currentTurn ="X";
+            if (currentTurn === "X") {
+                document.getElementById("turn-msg").innerHTML = "X's turn";
+            } else {
+                document.getElementById("turn-msg").innerHTML = "O's turn";
+            }
+            gameOver = false;
+        }
+
+        var k;
+        for (k = 0; k < NUM_SQUARES; k++) {
+            document.getElementById("sq" + k).onclick = handleClick;
+        }
+        document.getElementById("startbtn").onclick = startGame;
+        currentTurn = pickFirstPlayer();
+        if (currentTurn === "X") {
+            document.getElementById("turn-msg").innerHTML = "X's turn";
+        } else {
+            document.getElementById("turn-msg").innerHTML = "O's turn";
+        }
+        gameOver = false;
+    </script>
+</body>
+</html>
